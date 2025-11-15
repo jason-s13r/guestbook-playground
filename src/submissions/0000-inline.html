@@ -1,0 +1,24 @@
+hello lol "modules" for experiments.
+<div entry="inline/demo">
+  <button>increase</button>
+  <div counter></div>
+</div>
+<script module="inline/demo" type="application/javascript inline">
+  import { signal, effect } from "pkg:signals";
+  import { counter } from "inline/counter";
+
+  const $root = document.querySelector('[entry="inline/demo"]');
+  const $button = $root.querySelector("button");
+  const $counter = $root.querySelector("[counter]");
+
+  effect(() => {
+    $counter.textContent = `counter: ${counter()}.`;
+  });
+
+  $button.addEventListener("click", () => counter.set(cur => cur + 1));
+</script>
+<script module="inline/counter" type="application/javascript inline">
+  import { signal, effect } from "pkg:signals";
+
+  export const counter = signal(0);
+</script>

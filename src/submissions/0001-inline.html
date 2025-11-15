@@ -1,0 +1,22 @@
+count * 2
+<div entry="inline/double">
+  <button>increase</button>
+  <div counter></div>
+</div>
+<script module="inline/double" type="application/javascript inline">
+  import { computed, effect } from 'pkg:signals';
+  import { counter } from 'inline/counter';
+
+  const double = computed(() => counter() * 2);
+  const $root = document.querySelector('[entry="inline/double"]');
+  const $button = $root.querySelector('button');
+  const $counter = $root.querySelector('[counter]');
+
+  $root.append('ImportMap Modules.');
+
+  effect(() => {
+    $counter.textContent = `double: ${double()}.`;
+  });
+
+  $button.addEventListener('click', () => counter.set(cur => cur + 1));
+</script>

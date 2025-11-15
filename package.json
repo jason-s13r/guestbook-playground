@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "build": "parcel build src/index.html",
+    "start": "parcel src/index.html"
+  },
+  "devDependencies": {
+    "@parcel/config-default": "^2.16.1",
+    "@parcel/optimizer-terser": "^2.16.1",
+    "@parcel/transformer-inline-string": "^2.16.1",
+    "@parcel/transformer-sass": "^2.16.1",
+    "@parcel/transformer-typescript-tsc": "^2.16.1",
+    "@parcel/transformer-typescript-types": "^2.16.1",
+    "@parcel/ts-utils": "^2.16.1",
+    "posthtml-include": "^2.0.1",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@maverick-js/signals": "^6.0.0"
+  }
+}

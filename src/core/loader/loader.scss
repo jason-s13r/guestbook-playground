@@ -1,0 +1,95 @@
+[entry]:not([executed]) {
+  display: none;
+}
+
+iframe[module] {
+  border: solid 1px #000;
+  aspect-ratio: 4 / 3;
+  width: 480px;
+  max-width: 100dvw;
+}
+
+button[run] {
+  all: unset;
+  cursor: pointer;
+  margin: 0;
+  padding: 0.5em;
+  border: solid 1px #000;
+  display: block;
+
+  &[executed] {
+    pointer-events: none;
+    opacity: 0.5;
+    filter: grayscale(100%);
+  }
+
+  &:before {
+    content: "▶ ";
+    font-weight: bold;
+    color: green;
+    vertical-align: top;
+    line-height: 1em;
+  }
+
+  &:hover {
+    background-color: #dddddd;
+  }
+
+  &:active {
+    background-color: #cccccc;
+  }
+}
+
+script[data-info]:not([src]) {
+  opacity: 0.5;
+  display: inline-block;
+  height: 1.5em;
+  position: relative;
+  overflow: hidden;
+  font-family: monospace;
+  border: 1px solid #aaaaaa;
+  isolation: isolate;
+  padding: 0 0.5em 0.5em;
+  margin: 0.25em 0;
+  // min-width: fit-content;
+  width: 600px;
+  max-width: 95%;
+
+  &:before {
+    content: var(--open, "+ ") var(--type, "<script> ") attr(module) attr(data-info) var(--executed, "");
+    display: block;
+    height: 1em;
+    position: sticky;
+    top: 0;
+    inset-inline: -0.5em;
+    padding: 0.5em;
+    margin: 0 -0.5em 0.5em;
+    text-shadow: 0 0 1em #fff;
+    background-color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 0 5px #fff;
+  }
+
+  &[module] {
+    --type: "<script module> ";
+  }
+  &[type="importmap"] {
+    --type: "<script importmap> ";
+  }
+
+  &[open] {
+    opacity: 1;
+    --open: "- ";
+    height: auto;
+    max-height: 60dvh;
+    overflow: auto;
+    white-space: pre;
+
+    &:before {
+      border-bottom: 1px solid #aaaaaa;
+      background-color: rgba(255, 255, 255, 0.85);
+    }
+  }
+  &[executed] {
+   --executed: " [executed] ";
+  }
+}
