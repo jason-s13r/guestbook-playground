@@ -1,0 +1,36 @@
+hello lol "modules" for experiments.
+<div entry="#qot/init">
+  <button>What is qot?</button>
+  <div answer></div>
+</div>
+<script id="qot/init" type="module">
+  import { signal, effect, peek, computed } from "@maverick-js/signals";
+  import { qot } from "#qot";
+  import { titleCase } from "#string/titleCase";
+
+  const PREFIXES = ["It's", "I think it's", "Probably", "Definitely", "It means"];
+
+  const answer = signal(qot);
+  const next = signal(0);
+  const prefix = computed(() => PREFIXES.at(next() % PREFIXES.length));
+
+  const $root = document.querySelector('[entry="#qot/init"]');
+  const $button = $root.querySelector("button");
+  const $answer = $root.querySelector("[answer]");
+
+  effect(() => {
+    $answer.textContent = `${peek(prefix)} ${answer()}`;
+  });
+
+  $button.addEventListener("click", () => {
+    next.set(cur => cur + 1);
+    answer.set(cur => cur === qot ? titleCase(qot) : qot);
+  });
+</script>
+<script id="string/titleCase" type="module">
+  const titleCase = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+  export { titleCase };
+</script>
+<script id="qot" type="module">
+  export const qot = 'qot.';
+</script>

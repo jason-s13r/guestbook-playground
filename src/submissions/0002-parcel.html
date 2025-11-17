@@ -1,18 +1,16 @@
 count * 2
-<div entry="inline/double">
+<div entry="#demo/double">
   <button>increase</button>
   <div counter></div>
 </div>
-<script module="inline/double" type="application/javascript inline">
-  import { computed, effect } from 'pkg:signals';
-  import { counter } from 'inline/counter';
+<script id="demo/double" type="module" defer>
+  import { computed, effect } from "@maverick-js/signals";
+  import { counter } from '#demo/counter';
 
   const double = computed(() => counter() * 2);
-  const $root = document.querySelector('[entry="inline/double"]');
+  const $root = document.querySelector('[entry="#demo/double"]');
   const $button = $root.querySelector('button');
   const $counter = $root.querySelector('[counter]');
-
-  $root.append('ImportMap Modules.');
 
   effect(() => {
     $counter.textContent = `double: ${double()}.`;

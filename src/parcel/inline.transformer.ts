@@ -44,7 +44,6 @@ export default (new Transformer({
       asset.setMap(map);
     }
 
-    asset.type = 'inline';
     asset.setCode(outputText);
 
     return [asset];

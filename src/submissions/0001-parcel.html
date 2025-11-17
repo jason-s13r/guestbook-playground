@@ -1,13 +1,13 @@
 hello lol "modules" for experiments.
-<div entry="inline/demo">
+<div entry="#demo/init">
   <button>increase</button>
   <div counter></div>
 </div>
-<script module="inline/demo" type="application/javascript inline">
-  import { signal, effect } from "pkg:signals";
-  import { counter } from "inline/counter";
+<script id="demo/init" type="module">
+  import { effect } from "@maverick-js/signals";
+  import { counter } from "#demo/counter";
 
-  const $root = document.querySelector('[entry="inline/demo"]');
+  const $root = document.querySelector('[entry="#demo/init"]');
   const $button = $root.querySelector("button");
   const $counter = $root.querySelector("[counter]");
 
@@ -17,8 +17,8 @@ hello lol "modules" for experiments.
 
   $button.addEventListener("click", () => counter.set(cur => cur + 1));
 </script>
-<script module="inline/counter" type="application/javascript inline">
-  import { signal, effect } from "pkg:signals";
+<script id="demo/counter" type="module">
+  import { signal, effect } from "@maverick-js/signals";
 
   export const counter = signal(0);
 </script>

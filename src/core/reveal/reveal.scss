@@ -1,35 +1,18 @@
-[entry]:not([executed]) {
-  display: none;
+[entry] {
+  margin: 0.5em 0;
+
+  &:not([executed]) {
+    display: none;
+  }
 }
 
-iframe[module] {
-  border: solid 1px #000;
-  aspect-ratio: 4 / 3;
-  width: 480px;
-  max-width: 100dvw;
-}
-
-button[run] {
+button {
   all: unset;
   cursor: pointer;
-  margin: 0;
+  margin: 0.25em 0;
   padding: 0.5em;
   border: solid 1px #000;
   display: block;
-
-  &[executed] {
-    pointer-events: none;
-    opacity: 0.5;
-    filter: grayscale(100%);
-  }
-
-  &:before {
-    content: "▶ ";
-    font-weight: bold;
-    color: green;
-    vertical-align: top;
-    line-height: 1em;
-  }
 
   &:hover {
     background-color: #dddddd;
@@ -38,10 +21,28 @@ button[run] {
   &:active {
     background-color: #cccccc;
   }
+
+  &[run] {
+    &[executed] {
+      pointer-events: none;
+      opacity: 0.5;
+      filter: grayscale(100%);
+    }
+
+    &:before {
+      content: "▶ ";
+      font-weight: bold;
+      color: green;
+      vertical-align: top;
+      line-height: 1em;
+    }
+  }
 }
 
-script[data-info]:not([src]) {
-  opacity: 0.5;
+script[id][type="module"],
+script[id][type="inline"] {
+  font-size: 0.85em;
+  opacity: 0.25;
   display: inline-block;
   height: 1.5em;
   position: relative;
@@ -51,12 +52,12 @@ script[data-info]:not([src]) {
   isolation: isolate;
   padding: 0 0.5em 0.5em;
   margin: 0.25em 0;
-  // min-width: fit-content;
   width: 600px;
   max-width: 95%;
 
   &:before {
-    content: var(--open, "+ ") var(--type, "<script> ") attr(module) attr(data-info) var(--executed, "");
+    content: var(--open, "+ ") var(--type, "<script> ") var(--label, "")
+      attr(data-info) var(--executed, "");
     display: block;
     height: 1em;
     position: sticky;
@@ -69,15 +70,17 @@ script[data-info]:not([src]) {
     text-shadow: 0 0 5px #fff;
   }
 
-  &[module] {
-    --type: "<script module> ";
+  &[id] {
+    --label: "#" attr(id);
+    --type: "";
   }
-  &[type="importmap"] {
-    --type: "<script importmap> ";
+
+  &:hover,
+  &[open] {
+    opacity: 1;
   }
 
   &[open] {
-    opacity: 1;
     --open: "- ";
     height: auto;
     max-height: 60dvh;
@@ -90,6 +93,6 @@ script[data-info]:not([src]) {
     }
   }
   &[executed] {
-   --executed: " [executed] ";
+    --executed: " [executed] ";
   }
 }

@@ -1,0 +1,33 @@
+<div entry="#lolcryption/init">
+  <textarea></textarea>
+  <button enlolcrypt>enLOLcrypt</button>
+  <button delolcrypt>deLOLcrypt</button>
+</div>
+<script id="lolcryption/init" type="module" defer>
+  import { signal, effect, onDispose } from "@maverick-js/signals";
+
+  const ALPHABET = "aeioubcdfghjklmnpqrstvwxyz";
+  const LOLCRYPTED = "iouaenpqrstvwxyzbcdfghjklm";
+
+  const tr = (text, inAlphabet, outAlphabet) =>
+    text.replace(new RegExp(`([${inAlphabet}])`, "ig"), function (value) {
+      const index = inAlphabet.indexOf(value.toLowerCase());
+      const c = outAlphabet[index] || value;
+      return /[A-Z]/.test(value) ? c.toUpperCase() : c;
+    });
+
+  const $root = document.querySelector('[entry="#lolcryption/init"]');
+  const $textarea = $root.querySelector("textarea");
+  const $encrypt = $root.querySelector("button[enlolcrypt]");
+  const $decrypt = $root.querySelector("button[delolcrypt]");
+
+  const text = signal("Hello, world.");
+  effect(() => ($textarea.value = text()));
+  $textarea.addEventListener("keyup", (event) => text.set(event.target.value));
+  $encrypt.addEventListener("click", () =>
+    text.set(tr($textarea.value, ALPHABET, LOLCRYPTED))
+  );
+  $decrypt.addEventListener("click", () =>
+    text.set(tr($textarea.value, LOLCRYPTED, ALPHABET))
+  );
+</script>

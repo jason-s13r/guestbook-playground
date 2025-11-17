@@ -1,11 +1,21 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const inlineCounter = 'inline/counter';
-    const pkgSignals = 'pkg:signals';
+const $form = document.querySelector('form');
 
-    const {effect} = await import(pkgSignals);
-    const {counter} = await import(inlineCounter);
+$form.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-    effect(() => {
-        console.debug('inline counter updated:', counter());
-    });
+  const response = await fetch(process.env.SUBMISSION_API, {
+    method: 'POST',
+    body: new FormData($form),
+  })
+
+  if (response.ok) {
+    const $reply = $form.querySelector('div')
+    $reply.innerHTML = await response.text();
+    $form.reset();
+  }
+});
+
+$form.addEventListener('focus', event => {
+  const $reply = $form.querySelector('div')
+  $reply.innerHTML = '';
 });

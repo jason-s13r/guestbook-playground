@@ -11,6 +11,8 @@
     "@parcel/transformer-typescript-tsc": "^2.16.1",
     "@parcel/transformer-typescript-types": "^2.16.1",
     "@parcel/ts-utils": "^2.16.1",
+    "@types/node": "^24.10.1",
+    "node-html-parser": "^7.0.1",
     "posthtml-include": "^2.0.1",
     "typescript": "^5.9.3"
   },

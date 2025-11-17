@@ -1,12 +1,24 @@
-<pre>Jason's Guestbook
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
+<meta charset=UTF-8><link rel=icon href=data:,><pre>
+Jason's Guestbook
+
+Inspired by <a href="https://t0.vc/g/">https://t0.vc/g/</a>.
+
 <form>
-    (form goes here)
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required />
+    <label for="url">Website (optional):</label>
+    <input type="text" id="url" name="url" />
+    <label for="message">Message:</label>
+    <textarea name="message" cols="60" rows="6" required></textarea>
+    <button type="submit">Submit</button>
+    <div></div>
 </form>
 
 Messages
 ========
 <include src="./submissions/index.html"></include>
+</pre>
 
 <link rel="stylesheet" href="./index.scss" />
-<script src="./core/loader/loader.js"></script>
-<script type="module" src="./index.js" defer></script>
+<script src="./index.js" type="module" defer></script>
