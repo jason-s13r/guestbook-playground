@@ -72,9 +72,10 @@ def submission():
 
     date = datetime.now()
     day = date.strftime("%Y-%m-%d")
+    timestamp = date.timestamp()
     link = "" if not url else f'(<a href="{url}">{url}</a>)'
 
-    label = f"{day}-submission"
+    label = f"{timestamp}-submission"
     header = f"{day} - {name} {link}".strip()
     submission_text = f"\n{header}\n\n{message}\n\n"
 
