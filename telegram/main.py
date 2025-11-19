@@ -29,8 +29,7 @@ URL = "/"
 
 FORM_TEXT = f"""<pre>
 <form action="{URL}" method="POST" accept-charset="UTF-8">
-<input name="name" style="border: none; height: 0.1em" />
-Name: <input name="from" />
+Name: <input name="name" />
 Url (optional): <input name="url" />
 Message:
 <textarea name="message" cols="60" rows="18"></textarea>
@@ -55,15 +54,11 @@ def nah():
 
 @api.route("/", methods=["POST"])
 def submission():
-    trap = request.form.get("name", None)
-    if trap:
-        return "Thanks! Your message is pending approval."
-
     captcha = request.form.get("captcha", None)
     if not captcha or OWNER_NAME not in captcha.lower():
         return "Please solve the CAPTCHA correctly."
 
-    name = request.form.get("from", None)
+    name = request.form.get("name", None)
     message = request.form.get("message", None)
     url = request.form.get("url", "")
 
