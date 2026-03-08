@@ -10,6 +10,7 @@ import subprocess
 from telethon.tl.custom.button import Button
 from telethon import TelegramClient, events
 from flask import Flask, request, abort
+import nh3
 
 logging.basicConfig(
     format="[%(asctime)s][%(levelname)s][%(name)s:%(lineno)s %(funcName)s()] %(message)s",
@@ -95,6 +96,7 @@ async def send_to_telegram(submission_text, label):
         markup = bot.build_reply_markup(
             [
                 [Button.inline("Approve", data="approve:" + str(reply.id))],
+                [Button.inline("Clean", data="clean:" + str(reply.id))],
                 [Button.inline("Decline", data="decline:" + str(reply.id))],
             ]
         )
@@ -126,7 +128,14 @@ async def start_bot():
         
         [msg] = await bot.get_messages(CHAT_ID, ids=[int(msg_id)])
 
-        file = await msg.download_media()
+        file_path = await msg.download_media()
+        file = Path(file_path)
+
+        if action == "clean":
+            content = file.read_text(encoding="utf-8")
+            plain = nh3.clean(content, tags=set())
+            file.write_text(plain, encoding="utf-8")
+
         tmp = subprocess.run(['mktemp', '-d'], capture_output=True).stdout.decode('utf-8').strip()
 
         print(tmp)
