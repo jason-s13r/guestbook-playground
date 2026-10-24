@@ -43,6 +43,14 @@ CAPTCHA: Who owns this site? <input name="captcha" />
 # Initialize Flask app globally
 api = Flask(__name__)
 
+CORS_ORIGIN = os.getenv("CORS_ORIGIN", "*")
+
+
+@api.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = CORS_ORIGIN
+    return response
+
 # Global bot instance
 bot = None
 loop = None

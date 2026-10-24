@@ -6,3 +6,4 @@ build/
 .env
 *.session
 *.session-journal
+__pycache__/
